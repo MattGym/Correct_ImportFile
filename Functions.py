@@ -63,7 +63,7 @@ def get_cell_value(sheet, row, col):
     return sheet.cell(row=row, column=col).value
 
 
-def set_cell_value(sheet, row, col, val, typ=0):
+def set_cell_value(sheet: object, row: object, col: object, val: object, typ: object = 0) -> object:
     """
     Set value at cell in active_sheet at specific row & column position.
     Parameters
@@ -125,3 +125,72 @@ def set_cell_comment(sheet, row, col, commentary, add=False, delete=False):
         sheet.cell(row=row, column=col).comment = None
 
 
+def update_alm_and_msg(sheet1, sheet2, am100_av, file1_col_tag, file1_col_seq,  file1_col_template, file1_col_event,
+                       file1_col_alm, file1_col_msg, file1_col_prio, file1_col_hhprio, file1_col_hprio, file1_col_lprio,
+                       file1_col_llprio, file1_col_ext1prio, file1_col_ext2prio, file1_col_ext3prio, file1_col_ext4prio,
+                       file1_col_faprio, max_row1, max_row2):
+    for i in range(2, max_row1 + 1):
+        if get_cell_value(sheet1, i, file1_col_seq) == 0:
+            prefix = str(get_cell_value(sheet1, i, file1_col_tag))[0:3]
+            for j in range(2, max_row2+1):
+                if str(get_cell_value(sheet1, i, file1_col_alm)) == str(get_cell_value(sheet2, j, 1)) \
+                        and (prefix == str(get_cell_value(sheet2, j, 2)) or get_cell_value(sheet2, j, 2) is None):
+                    if str(get_cell_value(sheet1, i, file1_col_template)) == 'Am100' and am100_av is True:
+                        print('Am100')
+                        if get_cell_value(sheet1, i, file1_col_hhprio) == 900 \
+                                or get_cell_value(sheet1, i, file1_col_hprio) == 900 \
+                                or get_cell_value(sheet1, i, file1_col_lprio) == 900 \
+                                or get_cell_value(sheet1, i, file1_col_llprio) == 900 \
+                                or get_cell_value(sheet1, i, file1_col_ext1prio) == 900 \
+                                or get_cell_value(sheet1, i, file1_col_ext2prio) == 900 \
+                                or get_cell_value(sheet1, i, file1_col_ext3prio) == 900 \
+                                or get_cell_value(sheet1, i, file1_col_ext4prio) == 900 \
+                                or get_cell_value(sheet1, i, file1_col_faprio) == 900:
+                            set_cell_value(sheet1, i, file1_col_alm, get_cell_value(sheet2, j, 3))
+                            set_cell_value(sheet1, i, file1_col_msg, get_cell_value(sheet2, j, 3))
+                            continue
+                        set_cell_value(sheet1, i, file1_col_alm, get_cell_value(sheet2, j, 4))
+                        set_cell_value(sheet1, i, file1_col_msg, get_cell_value(sheet2, j, 4))
+                        continue
+                    if str(get_cell_value(sheet1, i, file1_col_template))[0:4] == 'Am10' \
+                            and str(get_cell_value(sheet1, i, file1_col_template)) != 'Am100':
+                        print(str(get_cell_value(sheet1, i, file1_col_template))[0:4], '  ',               #do wyjebania
+                              str(get_cell_value(sheet1, i, file1_col_template)))
+                        if get_cell_value(sheet1, i, file1_col_hhprio) == 900 \
+                                or get_cell_value(sheet1, i, file1_col_hprio) == 900 \
+                                or get_cell_value(sheet1, i, file1_col_lprio) == 900 \
+                                or get_cell_value(sheet1, i, file1_col_llprio) == 900:
+                            set_cell_value(sheet1, i, file1_col_alm, get_cell_value(sheet2, j, 3))
+                            set_cell_value(sheet1, i, file1_col_msg, get_cell_value(sheet2, j, 3))
+                            continue
+                        set_cell_value(sheet1, i, file1_col_alm, get_cell_value(sheet2, j, 4))
+                        set_cell_value(sheet1, i, file1_col_msg, get_cell_value(sheet2, j, 4))
+                        continue
+                    if str(get_cell_value(sheet1, i, file1_col_template))[0:4] == 'Dm10':
+                        if get_cell_value(sheet1, i, file1_col_event) == '1' \
+                                and get_cell_value(sheet1, i, file1_col_prio) == '900':
+                            set_cell_value(sheet1, i, file1_col_alm, get_cell_value(sheet2, j, 3))
+                            set_cell_value(sheet1, i, file1_col_msg, get_cell_value(sheet2, j, 3))
+                            continue
+                        set_cell_value(sheet1, i, file1_col_alm, get_cell_value(sheet2, j, 4))
+                        set_cell_value(sheet1, i, file1_col_msg, get_cell_value(sheet2, j, 4))
+                        continue
+                    if str(get_cell_value(sheet1, i, file1_col_template)) != 'Am100':
+                        set_cell_value(sheet1, i, file1_col_alm, get_cell_value(sheet2, j, 4))
+                        set_cell_value(sheet1, i, file1_col_msg, get_cell_value(sheet2, j, 4))
+
+
+def am100_clean_devicetags(sheet1, file1_col_template,  file1_col_devicetag2, file1_col_devicetag3, file1_col_devicetag4,
+                     file1_col_devicetag5, file1_col_devicetag6, file1_col_devicetag7, file1_col_devicetag8, 
+                     file1_col_devicetag9, file1_col_devicetag10, max_rows1):
+    for i in range(2, max_rows1+1):
+        if get_cell_value(file1_col_template) == 'Am100':
+            set_cell_value(sheet1, i, file1_col_devicetag2, 2)
+            set_cell_value(sheet1, i, file1_col_devicetag3, 2)
+            set_cell_value(sheet1, i, file1_col_devicetag4, 2)
+            set_cell_value(sheet1, i, file1_col_devicetag5, 2)
+            set_cell_value(sheet1, i, file1_col_devicetag6, 2)
+            set_cell_value(sheet1, i, file1_col_devicetag7, 2)
+            set_cell_value(sheet1, i, file1_col_devicetag8, 2)
+            set_cell_value(sheet1, i, file1_col_devicetag9, 2)
+            set_cell_value(sheet1, i, file1_col_devicetag10, 2)

@@ -4,7 +4,7 @@ import openpyxl
 # from openpyxl.comments import Comment
 # from openpyxl.styles import PatternFill
 # import pandas as pd
-#tu jest zmiana z maca
+
 import tkinter
 from tkinter import *
 from tkinter import filedialog
@@ -55,23 +55,36 @@ max_rows1 = 0
 max_col1 = 0
 
 file1_col_tag = 0
-file1_col_loop = 0
-file1_col_package = 0
-file1_col_description = 0
-file1_col_min = 0
-file1_col_max = 0
-file1_col_unit = 0
-file1_col_fbc = 0
-file1_col_ibc = 0
-file1_col_card = 0
-file1_col_channel = 0
+file1_col_template = 0
+file1_col_event = 0
 file1_col_instrument_code = 0
-file1_col_signal_type = 0
-file1_col_modbus_address = 0
-file1_col_bit = 0
-file1_col_gain = 0
-file1_col_slave = 0
-file1_col_link_signal_type = 0
+file1_col_seq = 0
+file1_col_msggroup = 0
+file1_col_algroup = 0
+file1_col_prio = 0
+file1_col_HHprio = 0
+file1_col_Hprio = 0
+file1_col_Lprio = 0
+file1_col_LLprio = 0
+file1_col_Ext1prio = 0
+file1_col_Ext2prio = 0
+file1_col_Ext3prio = 0
+file1_col_Ext4prio = 0
+file1_col_FAprio = 0
+file1_col_HHca = 0                  # HH alarm and control
+file1_col_Hca = 0                   # H alarm and control
+file1_col_Lca = 0                   # L alarm and control
+file1_col_LLca = 0                  # LL alarm and control
+file1_col_devicetag1 = 0
+file1_col_devicetag2 = 0
+file1_col_devicetag3 = 0
+file1_col_devicetag4 = 0
+file1_col_devicetag5 = 0
+file1_col_devicetag6 = 0
+file1_col_devicetag7 = 0
+file1_col_devicetag8 = 0
+file1_col_devicetag9 = 0
+file1_col_devicetag10 = 0
 
 # File 2 Variables
 file_path2 = ''
@@ -104,9 +117,18 @@ def analyze_file():
     print(file_path2)
 
     if checkbox1_var.get() == 1:
-        print('DOne1')
+        am100_active = False
+        if checkbox2_var.get() == 1:
+            am100_active = True
+        update_alm_and_msg(active_sheet1, active_sheet2, am100_active, file1_col_tag, file1_col_seq, file1_col_template,
+                           file1_col_event, file1_col_algroup, file1_col_msggroup, file1_col_prio, file1_col_HHprio,
+                           file1_col_Hprio, file1_col_Lprio, file1_col_LLprio, file1_col_Ext1prio, file1_col_Ext2prio,
+                           file1_col_Ext3prio,file1_col_Ext3prio,file1_col_FAprio, max_rows1, max_rows2)
 
     if checkbox2_var.get() == 1:
+        am100_clean_devicetags(active_sheet1, file1_col_template, file1_col_devicetag2, file1_col_devicetag3,
+                               file1_col_devicetag4, file1_col_devicetag5, file1_col_devicetag6, file1_col_devicetag7,
+                               file1_col_devicetag8, file1_col_devicetag9, file1_col_devicetag10, max_rows1)
         print('Done2')
 
     if checkbox3_var.get() == 1:
@@ -115,53 +137,84 @@ def analyze_file():
     if checkbox4_var.get() == 1:
         print('Done4')
 
-    print('saving 1st ')
     wb1.save(file_path1)
-    print('saving 2nd')
     wb2.save(file_path2)
-    print('Finish')
+
+    messagebox.showinfo(title='Message', message='Finished')
 
 
 def fill_col_numbers():
     # DNA DUMP
     global file1_col_tag
-    global file1_col_loop
-    global file1_col_package
-    global file1_col_description
-    global file1_col_min
-    global file1_col_max
-    global file1_col_unit
-    global file1_col_fbc
-    global file1_col_ibc
-    global file1_col_card
-    global file1_col_channel
+    global file1_col_template
+    global file1_col_event
     global file1_col_instrument_code
-    global file1_col_signal_type
-    global file1_col_modbus_address
-    global file1_col_bit
-    global file1_col_gain
-    global file1_col_slave
-    global file1_col_link_signal_type
+    global file1_col_seq
+    global file1_col_msggroup
+    global file1_col_algroup
+    global file1_col_prio
+    global file1_col_HHprio
+    global file1_col_Hprio
+    global file1_col_Lprio
+    global file1_col_LLprio
+    global file1_col_Ext1prio
+    global file1_col_Ext2prio
+    global file1_col_Ext3prio
+    global file1_col_Ext4prio
+    global file1_col_FAprio
+    global file1_col_HHca
+    global file1_col_Hca
+    global file1_col_Lca
+    global file1_col_LLca
+    global file1_col_devicetag1
+    global file1_col_devicetag2
+    global file1_col_devicetag3
+    global file1_col_devicetag4
+    global file1_col_devicetag5
+    global file1_col_devicetag6
+    global file1_col_devicetag7
+    global file1_col_devicetag8
+    global file1_col_devicetag9
+    global file1_col_devicetag10
 
     file1_col_tag = get_col_no(active_sheet1, '$(TAG)', max_col1)
-    file1_col_loop = get_col_no(active_sheet1, '$(LOOP)', max_col1)
-    file1_col_package = get_col_no(active_sheet1, '$(PACKAGE)', max_col1)
-    file1_col_description = get_col_no(active_sheet1, '$(NAME)', max_col1)
-    file1_col_min = get_col_no(active_sheet1, '$(MIN)', max_col1)
-    file1_col_max = get_col_no(active_sheet1, '$(MAX)', max_col1)
-    file1_col_unit = get_col_no(active_sheet1, '$(UNIT)', max_col1)
-    file1_col_fbc = get_col_no(active_sheet1, '$(FBC)', max_col1)
-    file1_col_ibc = get_col_no(active_sheet1, '$(IBC)', max_col1)
-    file1_col_card = get_col_no(active_sheet1, '$(CARD)', max_col1)
-    file1_col_channel = get_col_no(active_sheet1, '$(CHANNEL)', max_col1)
+    file1_col_template = get_col_no(active_sheet1, '$(TEMPLATE)', max_col1)
+    file1_col_event = get_col_no(active_sheet1, '$(EVENT)', max_col1)
     file1_col_instrument_code = get_col_no(active_sheet1, '$(INSTRUMENT_CODE)', max_col1)
-    file1_col_signal_type = get_col_no(active_sheet1, '$(TEMPLATE)', max_col1)
-    file1_col_modbus_address = get_col_no(active_sheet1, '$(LIS_ADDR)', max_col1)
-    file1_col_bit = get_col_no(active_sheet1, '$(LIS_BIT)', max_col1)
-    file1_col_gain = get_col_no(active_sheet1, '$(LIS_GAIN)', max_col1)
-    file1_col_slave = get_col_no(active_sheet1, '$(LIS_SLAVE)', max_col1)
-    file1_col_link_signal_type = get_col_no(active_sheet1, '$(LIS_SIGNED)', max_col1)
+    file1_col_seq = get_col_no(active_sheet1, '$(LOOP_ORDER)', max_col1)
+    file1_col_msggroup = get_col_no(active_sheet1, '$(MESGROUP)', max_col1)
+    file1_col_algroup = get_col_no(active_sheet1, '$(ALGROUP)', max_col1)
+    file1_col_prio = get_col_no(active_sheet1, '$(ALPRI1)', max_col1)
+    file1_col_HHprio = get_col_no(active_sheet1, '$(ALPRIHH)', max_col1)
+    file1_col_Hprio = get_col_no(active_sheet1, '$(ALPRIH)', max_col1)
+    file1_col_Lprio = get_col_no(active_sheet1, '$(ALPRIL)', max_col1)
+    file1_col_LLprio = get_col_no(active_sheet1, '$(ALPRILL)', max_col1)
+    file1_col_Ext1prio = get_col_no(active_sheet1, '$(ALPRIEXT1)', max_col1)
+    file1_col_Ext2prio = get_col_no(active_sheet1, '$(ALPRIEXT2)', max_col1)
+    file1_col_Ext3prio = get_col_no(active_sheet1, '$(ALPRIEXT3)', max_col1)
+    file1_col_Ext4prio = get_col_no(active_sheet1, '$(ALPRIEXT4)', max_col1)
+    file1_col_FAprio = get_col_no(active_sheet1, '$(ALPRIFA)', max_col1)            #sprawdzic czy tak sie nazywa
+    file1_col_HHca = get_col_no(active_sheet1, '$(HH_C&A)', max_col1)
+    file1_col_Hca = get_col_no(active_sheet1, '$(H_C&A)', max_col1)
+    file1_col_Lca = get_col_no(active_sheet1, '$(L_C&A)', max_col1)
+    file1_col_LLca = get_col_no(active_sheet1, '$(LL_C&A)', max_col1)
+    file1_col_devicetag1 = get_col_no(active_sheet1, '$(DEVICETAG1)', max_col1)
+    file1_col_devicetag2 = get_col_no(active_sheet1, '$(DEVICETAG2)', max_col1)
+    file1_col_devicetag3 = get_col_no(active_sheet1, '$(DEVICETAG3)', max_col1)
+    file1_col_devicetag4 = get_col_no(active_sheet1, '$(DEVICETAG4)', max_col1)
+    file1_col_devicetag5 = get_col_no(active_sheet1, '$(DEVICETAG5)', max_col1)
+    file1_col_devicetag6 = get_col_no(active_sheet1, '$(DEVICETAG6)', max_col1)
+    file1_col_devicetag7 = get_col_no(active_sheet1, '$(DEVICETAG7)', max_col1)
+    file1_col_devicetag8 = get_col_no(active_sheet1, '$(DEVICETAG8)', max_col1)
+    file1_col_devicetag9 = get_col_no(active_sheet1, '$(DEVICETAG9)', max_col1)
+    file1_col_devicetag10 = get_col_no(active_sheet1, '$(DEVICETAG10)', max_col1)
 
+    if checkbox2_var.get() == 1 and file1_col_Ext1prio == 0:
+        set_cell_value(active_sheet1, 1, max_col1 + 1, '$(ALPRIEXT1)', 1)
+        set_cell_value(active_sheet1, 1, max_col1 + 2, '$(ALPRIEXT2)', 1)
+        set_cell_value(active_sheet1, 1, max_col1 + 3, '$(ALPRIEXT3)', 1)
+        set_cell_value(active_sheet1, 1, max_col1 + 4, '$(ALPRIEXT4)', 1)
+        set_cell_value(active_sheet1, 1, max_col1 + 5, '$(ALPRIFA)', 1)
 
 def choose_file1():
     global file_path1
