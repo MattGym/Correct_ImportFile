@@ -4,7 +4,7 @@ import openpyxl
 # from openpyxl.comments import Comment
 # from openpyxl.styles import PatternFill
 # import pandas as pd
-
+#tu jest zmiana z maca
 import tkinter
 from tkinter import *
 from tkinter import filedialog
