@@ -129,6 +129,10 @@ def update_alm_and_msg(sheet1, sheet2, am100_av, file1_col_tag, file1_col_seq,  
                        file1_col_alm, file1_col_msg, file1_col_prio, file1_col_hhprio, file1_col_hprio, file1_col_lprio,
                        file1_col_llprio, file1_col_ext1prio, file1_col_ext2prio, file1_col_ext3prio, file1_col_ext4prio,
                        file1_col_faprio, max_row1, max_row2):
+    """
+    Function 'update_alp_and_msg' update alarm and message group of core loop, according to given relationship table.
+    ----------
+    """
     for i in range(2, max_row1 + 1):
         if get_cell_value(sheet1, i, file1_col_seq) == 0:
             prefix = str(get_cell_value(sheet1, i, file1_col_tag))[0:3]
@@ -181,8 +185,12 @@ def update_alm_and_msg(sheet1, sheet2, am100_av, file1_col_tag, file1_col_seq,  
 
 
 def am100_clean_devicetags(sheet1, file1_col_template,  file1_col_devicetag2, file1_col_devicetag3, file1_col_devicetag4,
-                     file1_col_devicetag5, file1_col_devicetag6, file1_col_devicetag7, file1_col_devicetag8, 
-                     file1_col_devicetag9, file1_col_devicetag10, max_rows1):
+                           file1_col_devicetag5, file1_col_devicetag6, file1_col_devicetag7, file1_col_devicetag8,
+                           file1_col_devicetag9, file1_col_devicetag10, max_rows1):
+    """
+    Function 'am100_clean_devicetag' cleaning devicetag 2 --> 10 for Am100 loops only and prepare to dynamic filling.
+    ----------
+    """""
     for i in range(2, max_rows1+1):
         if get_cell_value(file1_col_template) == 'Am100':
             set_cell_value(sheet1, i, file1_col_devicetag2, 2)
