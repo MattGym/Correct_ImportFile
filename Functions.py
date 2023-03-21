@@ -204,3 +204,6 @@ def am100_clean_devicetags(sheet1, file1_col_template,  file1_col_devicetag2, fi
             set_cell_value(sheet1, i, file1_col_devicetag10, 2)
 
 
+
+
+

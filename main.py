@@ -211,62 +211,78 @@ def fill_col_numbers():
 
     if checkbox2_var.get() == 1 and file1_col_Ext1prio == 0:
         set_cell_value(active_sheet1, 1, max_col1 + 1, '$(ALPRIEXT1)', 1)
-        file1_col_Ext1prio = get_col_no(active_sheet1, '$(ALPRIEXT1)', 1)
+        file1_col_Ext1prio = max_col1 + 2
         set_cell_value(active_sheet1, 1, max_col1 + 2, '$(ALPRIEXT2)', 1)
-        file1_col_Ext1prio = get_col_no(active_sheet1, '$(ALPRIEXT2)', 1)
+        file1_col_Ext1prio = max_col1 + 2
         set_cell_value(active_sheet1, 1, max_col1 + 3, '$(ALPRIEXT3)', 1)
-        file1_col_Ext1prio = get_col_no(active_sheet1, '$(ALPRIEXT3)', 1)
+        file1_col_Ext1prio = max_col1 + 3
         set_cell_value(active_sheet1, 1, max_col1 + 4, '$(ALPRIEXT4)', 1)
-        file1_col_Ext1prio = get_col_no(active_sheet1, '$(ALPRIEXT4)', 1)
+        file1_col_Ext1prio = max_col1 + 4
         set_cell_value(active_sheet1, 1, max_col1 + 5, '$(ALPRIFA)', 1)
-        file1_col_Ext1prio = get_col_no(active_sheet1, '$(ALPRIFA)', 1)
+        file1_col_Ext1prio = max_col1 + 5
         max_col1 = max_col1 + 5
 
-    if checkbox2_var.get() == 1 and (file1_col_devicetag1 == 0 or file1_col_devicetag2 == 0 or file1_col_devicetag3 == 0
-                                     or file1_col_devicetag4 == 0 or file1_col_devicetag5 == 0 or file1_col_devicetag6 == 0
-                                     or file1_col_devicetag7 == 0 or file1_col_devicetag8 == 0 or file1_col_devicetag9 == 0
-                                     or file1_col_devicetag10 == 0):
+    if checkbox2_var.get() == 1 and (file1_col_devicetag1 == 0 or file1_col_devicetag2 == 0
+                                     or file1_col_devicetag3 == 0 or file1_col_devicetag4 == 0
+                                     or file1_col_devicetag5 == 0 or file1_col_devicetag6 == 0
+                                     or file1_col_devicetag7 == 0 or file1_col_devicetag8 == 0
+                                     or file1_col_devicetag9 == 0 or file1_col_devicetag10 == 0):
         if file1_col_devicetag1 == 0:
             set_cell_value(active_sheet1, 1, max_col1 + 1, '$(DEVICETAG1)', 1)
-            file1_col_Ext1prio = get_col_no(active_sheet1, '$(DEVICETAG1)', 1)
             max_col1 += 1
+            file1_col_devicetag1 = max_col1
         if file1_col_devicetag2 == 0:
             set_cell_value(active_sheet1, 1, max_col1 + 1, '$(DEVICETAG2)', 1)
-            file1_col_Ext1prio = get_col_no(active_sheet1, '$(DEVICETAG2)', 1)
             max_col1 += 1
+            file1_col_devicetag2 = max_col1
         if file1_col_devicetag3 == 0:
             set_cell_value(active_sheet1, 1, max_col1 + 1, '$(DEVICETAG3)', 1)
-            file1_col_Ext1prio = get_col_no(active_sheet1, '$(DEVICETAG3)', 1)
             max_col1 += 1
+            file1_col_devicetag3 = max_col1
         if file1_col_devicetag4 == 0:
             set_cell_value(active_sheet1, 1, max_col1 + 1, '$(DEVICETAG4)', 1)
-            file1_col_Ext1prio = get_col_no(active_sheet1, '$(DEVICETAG4)', 1)
             max_col1 += 1
+            file1_col_devicetag4 = max_col1
         if file1_col_devicetag5 == 0:
             set_cell_value(active_sheet1, 1, max_col1 + 1, '$(DEVICETAG5)', 1)
-            file1_col_Ext1prio = get_col_no(active_sheet1, '$(DEVICETAG5)', 1)
             max_col1 += 1
+            file1_col_devicetag5 = max_col1
         if file1_col_devicetag6 == 0:
             set_cell_value(active_sheet1, 1, max_col1 + 1, '$(DEVICETAG6)', 1)
-            file1_col_Ext1prio = get_col_no(active_sheet1, '$(DEVICETAG6)', 1)
             max_col1 += 1
+            file1_col_devicetag6 = max_col1
         if file1_col_devicetag7 == 0:
             set_cell_value(active_sheet1, 1, max_col1 + 1, '$(DEVICETAG7)', 1)
-            file1_col_Ext1prio = get_col_no(active_sheet1, '$(DEVICETAG7)', 1)
             max_col1 += 1
+            file1_col_devicetag7 = max_col1
         if file1_col_devicetag8 == 0:
             set_cell_value(active_sheet1, 1, max_col1 + 1, '$(DEVICETAG8)', 1)
-            file1_col_Ext1prio = get_col_no(active_sheet1, '$(DEVICETAG8)', 1)
             max_col1 += 1
+            file1_col_devicetag8 = max_col1
         if file1_col_devicetag9 == 0:
             set_cell_value(active_sheet1, 1, max_col1 + 1, '$(DEVICETAG9)', 1)
-            file1_col_Ext1prio = get_col_no(active_sheet1, '$(DEVICETAG9)', 1)
             max_col1 += 1
+            file1_col_devicetag9 = max_col1
         if file1_col_devicetag10 == 0:
             set_cell_value(active_sheet1, 1, max_col1 + 1, '$(DEVICETAG10)', 1)
-            file1_col_Ext1prio = get_col_no(active_sheet1, '$(DEVICETAG10)', 1)
             max_col1 += 1
-
+            file1_col_devicetag10 = max_col1
+    if file1_col_HHprio == 0:
+        set_cell_value(active_sheet1, 1, max_col1 + 1, '$(ALPRIHH)', 1)
+        max_col1 += 1
+        file1_col_HHprio = max_col1
+    if file1_col_Hprio == 0:
+        set_cell_value(active_sheet1, 1, max_col1 + 1, '$(ALPRIH)', 1)
+        max_col1 += 1
+        file1_col_Hprio = max_col1
+    if file1_col_Lprio == 0:
+        set_cell_value(active_sheet1, 1, max_col1 + 1, '$(ALPRIL)', 1)
+        max_col1 += 1
+        file1_col_Lprio = max_col1
+    if file1_col_LLprio == 0:
+        set_cell_value(active_sheet1, 1, max_col1 + 1, '$(ALPRILL)', 1)
+        max_col1 += 1
+        file1_col_LLprio = max_col1
 
 def choose_file1():
     global file_path1
