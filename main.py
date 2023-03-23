@@ -283,6 +283,10 @@ def fill_col_numbers():
         set_cell_value(active_sheet1, 1, max_col1 + 1, '$(ALPRILL)', 1)
         max_col1 += 1
         file1_col_LLprio = max_col1
+    if file1_col_event == 0:
+        set_cell_value(active_sheet1, 1, max_col1 + 1, '$(EVENT)', 1)
+        max_col1 += 1
+        file1_col_event = max_col1
 
 def choose_file1():
     global file_path1
