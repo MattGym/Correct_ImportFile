@@ -63,7 +63,7 @@ def get_cell_value(sheet, row, col):
     return sheet.cell(row=row, column=col).value
 
 
-def set_cell_value(sheet: object, row: object, col: object, val: object, typ: object = 0) -> object:
+def set_cell_value(sheet, row: object, col: object, val: any, typ: object = 0):
     """
     Set value at cell in active_sheet at specific row & column position.
     Parameters
@@ -139,8 +139,8 @@ def update_alm_and_msg(sheet1, sheet2, am100_av, file1_col_tag, file1_col_seq,  
             for j in range(2, max_row2+1):
                 if str(get_cell_value(sheet1, i, file1_col_alm)) == str(get_cell_value(sheet2, j, 1)) \
                         and (prefix == str(get_cell_value(sheet2, j, 2)) or get_cell_value(sheet2, j, 2) is None):
-                    if str(get_cell_value(sheet1, i, file1_col_template)) == 'Am100' and am100_av is True:
-                        print('Am100')
+                    print(str(get_cell_value(sheet1, i, file1_col_template)))
+                    if str(get_cell_value(sheet1, i, file1_col_template)) == 'Am100' and am100_av == 1:
                         if get_cell_value(sheet1, i, file1_col_hhprio) == 900 \
                                 or get_cell_value(sheet1, i, file1_col_hprio) == 900 \
                                 or get_cell_value(sheet1, i, file1_col_lprio) == 900 \
@@ -150,16 +150,17 @@ def update_alm_and_msg(sheet1, sheet2, am100_av, file1_col_tag, file1_col_seq,  
                                 or get_cell_value(sheet1, i, file1_col_ext3prio) == 900 \
                                 or get_cell_value(sheet1, i, file1_col_ext4prio) == 900 \
                                 or get_cell_value(sheet1, i, file1_col_faprio) == 900:
+                            print('CRIT')
                             set_cell_value(sheet1, i, file1_col_alm, get_cell_value(sheet2, j, 3))
                             set_cell_value(sheet1, i, file1_col_msg, get_cell_value(sheet2, j, 3))
                             continue
-                        set_cell_value(sheet1, i, file1_col_alm, get_cell_value(sheet2, j, 4))
-                        set_cell_value(sheet1, i, file1_col_msg, get_cell_value(sheet2, j, 4))
-                        continue
+                        else:
+                            print('NCRIT')
+                            set_cell_value(sheet1, i, file1_col_alm, get_cell_value(sheet2, j, 4))
+                            set_cell_value(sheet1, i, file1_col_msg, get_cell_value(sheet2, j, 4))
+                            continue
                     if str(get_cell_value(sheet1, i, file1_col_template))[0:4] == 'Am10' \
                             and str(get_cell_value(sheet1, i, file1_col_template)) != 'Am100':
-                        print(str(get_cell_value(sheet1, i, file1_col_template))[0:4], '  ',               #do wyjebania
-                              str(get_cell_value(sheet1, i, file1_col_template)))
                         if get_cell_value(sheet1, i, file1_col_hhprio) == 900 \
                                 or get_cell_value(sheet1, i, file1_col_hprio) == 900 \
                                 or get_cell_value(sheet1, i, file1_col_lprio) == 900 \
@@ -192,18 +193,68 @@ def am100_clean_devicetags(sheet1, file1_col_template,  file1_col_devicetag2, fi
     ----------
     """""
     for i in range(2, max_rows1+1):
-        if get_cell_value(file1_col_template) == 'Am100':
-            set_cell_value(sheet1, i, file1_col_devicetag2, 2)
-            set_cell_value(sheet1, i, file1_col_devicetag3, 2)
-            set_cell_value(sheet1, i, file1_col_devicetag4, 2)
-            set_cell_value(sheet1, i, file1_col_devicetag5, 2)
-            set_cell_value(sheet1, i, file1_col_devicetag6, 2)
-            set_cell_value(sheet1, i, file1_col_devicetag7, 2)
-            set_cell_value(sheet1, i, file1_col_devicetag8, 2)
-            set_cell_value(sheet1, i, file1_col_devicetag9, 2)
-            set_cell_value(sheet1, i, file1_col_devicetag10, 2)
+        if str(get_cell_value(sheet1, i, file1_col_template)) == 'Am100':
+            set_cell_value(sheet1, i, file1_col_devicetag2, '', 2)
+            set_cell_value(sheet1, i, file1_col_devicetag3, '', 2)
+            set_cell_value(sheet1, i, file1_col_devicetag4, '', 2)
+            set_cell_value(sheet1, i, file1_col_devicetag5, '', 2)
+            set_cell_value(sheet1, i, file1_col_devicetag6, '', 2)
+            set_cell_value(sheet1, i, file1_col_devicetag7, '', 2)
+            set_cell_value(sheet1, i, file1_col_devicetag8, '', 2)
+            set_cell_value(sheet1, i, file1_col_devicetag9, '', 2)
+            set_cell_value(sheet1, i, file1_col_devicetag10, '', 2)
+
+def am100_update_devicetags(sheet1, file1_col_tag, file1_col_seq, file1_col_prio, file1_col_template, file1_col_instrument_code,
+                            file1_col_devicetag1, file1_col_devicetag2, file1_col_devicetag3, file1_col_devicetag4,
+                            file1_col_devicetag5, file1_col_devicetag6, file1_col_devicetag7, file1_col_devicetag8,
+                            file1_col_devicetag9, file1_col_devicetag10, file1_col_HHprio, file1_col_Hprio,
+                            file1_col_Lprio, file1_col_LLprio, file1_col_FAprio, file1_col_Ext1prio, file1_col_Ext2prio,
+                            file1_col_Ext3prio, file1_col_Ext4prio, max_rows1):
+    for i in range(2, max_rows1+1):
+        if str(get_cell_value(sheet1, i, file1_col_template)) == 'Am100' and get_cell_value(sheet1, i, file1_col_seq) == 0:
+            tag = str(get_cell_value(sheet1, i, file1_col_tag))
+            for j in range(1, 10):
+                if tag == str(get_cell_value(sheet1, i+j, file1_col_tag)) and get_cell_value(sheet1, i+j, file1_col_seq) > 0:
+                    if str(get_cell_value(sheet1, i+j, file1_col_instrument_code)[-2:]) == 'XA':
+                        set_cell_value(sheet1, i, file1_col_FAprio, get_cell_value(sheet1, i+j, file1_col_prio))
+                        set_cell_value(sheet1, i, file1_col_devicetag2, tag + '.' + str(j), 1)
+                    if str(get_cell_value(sheet1, i+j, file1_col_instrument_code)[-2:]) == 'A1':
+                        set_cell_value(sheet1, i, file1_col_Ext1prio, get_cell_value(sheet1, i+j, file1_col_prio))
+                        set_cell_value(sheet1, i, file1_col_devicetag7, tag + '.' + str(j), 1)
+                    if str(get_cell_value(sheet1, i+j, file1_col_instrument_code)[-2:]) == 'A2':
+                        set_cell_value(sheet1, i, file1_col_Ext2prio, get_cell_value(sheet1, i+j, file1_col_prio))
+                        set_cell_value(sheet1, i, file1_col_devicetag8, tag + '.' + str(j), 1)
+                    if str(get_cell_value(sheet1, i+j, file1_col_instrument_code)[-2:]) == 'A3':
+                        set_cell_value(sheet1, i, file1_col_Ext3prio, get_cell_value(sheet1, i+j, file1_col_prio))
+                        set_cell_value(sheet1, i, file1_col_devicetag9, tag + '.' + str(j), 1)
+                    if str(get_cell_value(sheet1, i+j, file1_col_instrument_code)[-2:]) == 'A4':
+                        set_cell_value(sheet1, i, file1_col_Ext4prio, get_cell_value(sheet1, i+j, file1_col_prio))
+                        set_cell_value(sheet1, i, file1_col_devicetag10, tag + '.' + str(j), 1)
+                    if str(get_cell_value(sheet1, i+j, file1_col_instrument_code)[-3:]) == 'AHH':
+                        set_cell_value(sheet1, i, file1_col_HHprio, get_cell_value(sheet1, i+j, file1_col_prio))
+                        set_cell_value(sheet1, i, file1_col_devicetag3, tag + '.' + str(j), 1)
+                    if str(get_cell_value(sheet1, i+j, file1_col_instrument_code)[-2:]) == 'AH' and str(get_cell_value(sheet1, i+j, file1_col_instrument_code)[-3:]) != 'AHH':
+                        set_cell_value(sheet1, i, file1_col_Hprio, get_cell_value(sheet1, i+j, file1_col_prio))
+                        set_cell_value(sheet1, i, file1_col_devicetag4, tag + '.' + str(j), 1)
+                    if str(get_cell_value(sheet1, i+j, file1_col_instrument_code)[-2:]) == 'AL' and str(get_cell_value(sheet1, i+j, file1_col_instrument_code)[-3:]) != 'ALL':
+                        set_cell_value(sheet1, i, file1_col_Lprio, get_cell_value(sheet1, i+j, file1_col_prio))
+                        set_cell_value(sheet1, i, file1_col_devicetag5, tag + '.' + str(j), 1)
+                    if str(get_cell_value(sheet1, i+j, file1_col_instrument_code)[-3:]) == 'ALL':
+                        set_cell_value(sheet1, i, file1_col_LLprio, get_cell_value(sheet1, i+j, file1_col_prio))
+                        set_cell_value(sheet1, i, file1_col_devicetag6, tag + '.' + str(j), 1)
 
 
-
+def merge_alarms(sheet1, file1_col_template, file1_col_seq, file1_col_HHca, file1_col_Hca, file1_col_Lca,
+                 file1_col_LLca, file1_col_limit1, file1_col_limit2, file1_col_limit3, file1_col_limit4, max_rows1):
+    for i in range(2, max_rows1 + 1):
+        if str(get_cell_value(sheet1, i, file1_col_template)) == 'Am10' and get_cell_value(sheet1, i, file1_col_seq) == 0:
+            if get_cell_value(sheet1, i, file1_col_HHca) == 'X':
+                set_cell_value(sheet1, i, file1_col_limit1, 'HH', 2)
+            if get_cell_value(sheet1, i, file1_col_Hca) == 'X':
+                set_cell_value(sheet1, i, file1_col_limit2, 'H', 2)
+            if get_cell_value(sheet1, i, file1_col_Lca) == 'X':
+                set_cell_value(sheet1, i, file1_col_limit3, 'L', 2)
+            if get_cell_value(sheet1, i, file1_col_LLca) == 'X':
+                set_cell_value(sheet1, i, file1_col_limit4, 'LL', 2)
 
 

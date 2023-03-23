@@ -62,6 +62,10 @@ file1_col_seq = 0
 file1_col_msggroup = 0
 file1_col_algroup = 0
 file1_col_prio = 0
+file1_col_limit1 = 0
+file1_col_limit2 = 0
+file1_col_limit3 = 0
+file1_col_limit4 = 0
 file1_col_HHprio = 0
 file1_col_Hprio = 0
 file1_col_Lprio = 0
@@ -116,22 +120,28 @@ def analyze_file():
     print(file_path1)
     print(file_path2)
 
-    if checkbox1_var.get() == 1:
-        am100_active = False
-        if checkbox2_var.get() == 1:
-            am100_active = True
-        update_alm_and_msg(active_sheet1, active_sheet2, am100_active, file1_col_tag, file1_col_seq, file1_col_template,
-                           file1_col_event, file1_col_algroup, file1_col_msggroup, file1_col_prio, file1_col_HHprio,
-                           file1_col_Hprio, file1_col_Lprio, file1_col_LLprio, file1_col_Ext1prio, file1_col_Ext2prio,
-                           file1_col_Ext3prio,file1_col_Ext3prio,file1_col_FAprio, max_rows1, max_rows2)
-
     if checkbox2_var.get() == 1:
         am100_clean_devicetags(active_sheet1, file1_col_template, file1_col_devicetag2, file1_col_devicetag3,
                                file1_col_devicetag4, file1_col_devicetag5, file1_col_devicetag6, file1_col_devicetag7,
                                file1_col_devicetag8, file1_col_devicetag9, file1_col_devicetag10, max_rows1)
-
+        am100_update_devicetags(active_sheet1, file1_col_tag, file1_col_seq, file1_col_prio, file1_col_template,
+                                file1_col_instrument_code,file1_col_devicetag1, file1_col_devicetag2,
+                                file1_col_devicetag3, file1_col_devicetag4, file1_col_devicetag5, file1_col_devicetag6,
+                                file1_col_devicetag7, file1_col_devicetag8, file1_col_devicetag9, file1_col_devicetag10,
+                                file1_col_HHprio, file1_col_Hprio, file1_col_Lprio, file1_col_LLprio, file1_col_FAprio,
+                                file1_col_Ext1prio, file1_col_Ext2prio, file1_col_Ext3prio, file1_col_Ext4prio, max_rows1)
+        wb1.save(file_path1)
+    if checkbox1_var.get() == 1:
+        am100_active = 0
+        if checkbox2_var.get() == 1:
+            am100_active = 1
+        update_alm_and_msg(active_sheet1, active_sheet2, am100_active, file1_col_tag, file1_col_seq, file1_col_template,
+                           file1_col_event, file1_col_algroup, file1_col_msggroup, file1_col_prio, file1_col_HHprio,
+                           file1_col_Hprio, file1_col_Lprio, file1_col_LLprio, file1_col_Ext1prio, file1_col_Ext2prio,
+                           file1_col_Ext3prio,file1_col_Ext3prio,file1_col_FAprio, max_rows1, max_rows2)
     if checkbox3_var.get() == 1:
-        print('Done3')
+        merge_alarms(active_sheet1, file1_col_template, file1_col_seq, file1_col_HHca, file1_col_Hca, file1_col_Lca,
+                     file1_col_LLca, file1_col_limit1, file1_col_limit2, file1_col_limit3, file1_col_limit4, max_rows1)
 
     if checkbox4_var.get() == 1:
         print('Done4')
@@ -152,6 +162,10 @@ def fill_col_numbers():
     global file1_col_msggroup
     global file1_col_algroup
     global file1_col_prio
+    global file1_col_limit1
+    global file1_col_limit2
+    global file1_col_limit3
+    global file1_col_limit4
     global file1_col_HHprio
     global file1_col_Hprio
     global file1_col_Lprio
@@ -177,7 +191,7 @@ def fill_col_numbers():
     global file1_col_devicetag10
     global max_col1
 
-    file1_col_tag = get_col_no(active_sheet1, '$(TAG)', max_col1)
+    file1_col_tag = get_col_no(active_sheet1, '$(LOOP)', max_col1)
     file1_col_template = get_col_no(active_sheet1, '$(TEMPLATE)', max_col1)
     file1_col_event = get_col_no(active_sheet1, '$(EVENT)', max_col1)
     file1_col_instrument_code = get_col_no(active_sheet1, '$(INSTRUMENT_CODE)', max_col1)
@@ -185,6 +199,10 @@ def fill_col_numbers():
     file1_col_msggroup = get_col_no(active_sheet1, '$(MESGROUP)', max_col1)
     file1_col_algroup = get_col_no(active_sheet1, '$(ALGROUP)', max_col1)
     file1_col_prio = get_col_no(active_sheet1, '$(ALPRI1)', max_col1)
+    file1_col_limit1 = get_col_no(active_sheet1, '$(LIMIT1)', max_col1)
+    file1_col_limit2 = get_col_no(active_sheet1, '$(LIMIT2)', max_col1)
+    file1_col_limit3 = get_col_no(active_sheet1, '$(LIMIT3)', max_col1)
+    file1_col_limit4 = get_col_no(active_sheet1, '$(LIMIT4)', max_col1)
     file1_col_HHprio = get_col_no(active_sheet1, '$(ALPRIHH)', max_col1)
     file1_col_Hprio = get_col_no(active_sheet1, '$(ALPRIH)', max_col1)
     file1_col_Lprio = get_col_no(active_sheet1, '$(ALPRIL)', max_col1)
@@ -213,13 +231,13 @@ def fill_col_numbers():
         set_cell_value(active_sheet1, 1, max_col1 + 1, '$(ALPRIEXT1)', 1)
         file1_col_Ext1prio = max_col1 + 2
         set_cell_value(active_sheet1, 1, max_col1 + 2, '$(ALPRIEXT2)', 1)
-        file1_col_Ext1prio = max_col1 + 2
+        file1_col_Ext2prio = max_col1 + 2
         set_cell_value(active_sheet1, 1, max_col1 + 3, '$(ALPRIEXT3)', 1)
-        file1_col_Ext1prio = max_col1 + 3
+        file1_col_Ext3prio = max_col1 + 3
         set_cell_value(active_sheet1, 1, max_col1 + 4, '$(ALPRIEXT4)', 1)
-        file1_col_Ext1prio = max_col1 + 4
+        file1_col_Ext4prio = max_col1 + 4
         set_cell_value(active_sheet1, 1, max_col1 + 5, '$(ALPRIFA)', 1)
-        file1_col_Ext1prio = max_col1 + 5
+        file1_col_FAprio = max_col1 + 5
         max_col1 = max_col1 + 5
 
     if checkbox2_var.get() == 1 and (file1_col_devicetag1 == 0 or file1_col_devicetag2 == 0
@@ -287,6 +305,22 @@ def fill_col_numbers():
         set_cell_value(active_sheet1, 1, max_col1 + 1, '$(EVENT)', 1)
         max_col1 += 1
         file1_col_event = max_col1
+    if file1_col_limit1 == 0:
+        set_cell_value(active_sheet1, 1, max_col1 + 1, '$(LIMIT1)', 1)
+        max_col1 += 1
+        file1_col_limit1 = max_col1
+    if file1_col_limit2 == 0:
+        set_cell_value(active_sheet1, 1, max_col1 + 1, '$(LIMIT2)', 1)
+        max_col1 += 1
+        file1_col_limit2 = max_col1
+    if file1_col_limit3 == 0:
+        set_cell_value(active_sheet1, 1, max_col1 + 1, '$(LIMIT3)', 1)
+        max_col1 += 1
+        file1_col_limit3 = max_col1
+    if file1_col_limit4 == 0:
+        set_cell_value(active_sheet1, 1, max_col1 + 1, '$(LIMIT4)', 1)
+        max_col1 += 1
+        file1_col_limit4 = max_col1
 
 def choose_file1():
     global file_path1
