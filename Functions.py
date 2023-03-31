@@ -248,13 +248,13 @@ def merge_alarms(sheet1, file1_col_template, file1_col_seq, file1_col_HHca, file
                  file1_col_LLca, file1_col_limit1, file1_col_limit2, file1_col_limit3, file1_col_limit4, max_rows1):
     for i in range(2, max_rows1 + 1):
         if str(get_cell_value(sheet1, i, file1_col_template)) == 'Am10' and get_cell_value(sheet1, i, file1_col_seq) == 0:
-            if get_cell_value(sheet1, i, file1_col_HHca) == 'X':
-                set_cell_value(sheet1, i, file1_col_limit1, 'HH', 2)
-            if get_cell_value(sheet1, i, file1_col_Hca) == 'X':
-                set_cell_value(sheet1, i, file1_col_limit2, 'H', 2)
-            if get_cell_value(sheet1, i, file1_col_Lca) == 'X':
-                set_cell_value(sheet1, i, file1_col_limit3, 'L', 2)
-            if get_cell_value(sheet1, i, file1_col_LLca) == 'X':
-                set_cell_value(sheet1, i, file1_col_limit4, 'LL', 2)
+            if get_cell_value(sheet1, i, file1_col_HHca) == 'X' or int(get_cell_value(sheet1, i, file1_col_HHca)) == 1:
+                set_cell_value(sheet1, i, file1_col_limit4, 'HH', 1)
+            if get_cell_value(sheet1, i, file1_col_Hca) == 'X' or int(get_cell_value(sheet1, i, file1_col_Hca)) == 1:
+                set_cell_value(sheet1, i, file1_col_limit3, 'H', 1)
+            if get_cell_value(sheet1, i, file1_col_Lca) == 'X' or int(get_cell_value(sheet1, i, file1_col_Lca)) == 1:
+                set_cell_value(sheet1, i, file1_col_limit2, 'L', 1)
+            if get_cell_value(sheet1, i, file1_col_LLca) == 'X' or int(get_cell_value(sheet1, i, file1_col_LLca)) == 1:
+                set_cell_value(sheet1, i, file1_col_limit1, 'LL', 1)
 
 

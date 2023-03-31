@@ -321,6 +321,22 @@ def fill_col_numbers():
         set_cell_value(active_sheet1, 1, max_col1 + 1, '$(LIMIT4)', 1)
         max_col1 += 1
         file1_col_limit4 = max_col1
+    if file1_col_HHca == 0:
+        set_cell_value(active_sheet1, 1, max_col1 + 1, '$(HH_C&A)', 1)
+        max_col1 += 1
+        file1_col_HHca = max_col1
+    if file1_col_Hca == 0:
+        set_cell_value(active_sheet1, 1, max_col1 + 1, '$(H_C&A)', 1)
+        max_col1 += 1
+        file1_col_Hca = max_col1
+    if file1_col_Lca == 0:
+        set_cell_value(active_sheet1, 1, max_col1 + 1, '$(L_C&A)', 1)
+        max_col1 += 1
+        file1_col_Lca = max_col1
+    if file1_col_LLca == 0:
+        set_cell_value(active_sheet1, 1, max_col1 + 1, '$(LL_C&A)', 1)
+        max_col1 += 1
+        file1_col_LLca = max_col1
 
 def choose_file1():
     global file_path1
