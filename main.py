@@ -229,7 +229,7 @@ def fill_col_numbers():
 
     if checkbox2_var.get() == 1 and file1_col_Ext1prio == 0:
         set_cell_value(active_sheet1, 1, max_col1 + 1, '$(ALPRIEXT1)', 1)
-        file1_col_Ext1prio = max_col1 + 2
+        file1_col_Ext1prio = max_col1 + 1
         set_cell_value(active_sheet1, 1, max_col1 + 2, '$(ALPRIEXT2)', 1)
         file1_col_Ext2prio = max_col1 + 2
         set_cell_value(active_sheet1, 1, max_col1 + 3, '$(ALPRIEXT3)', 1)
