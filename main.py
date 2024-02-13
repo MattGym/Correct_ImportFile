@@ -10,7 +10,6 @@ from tkinter import *
 from tkinter import filedialog
 from tkinter import ttk
 from tkinter import messagebox
-
 from Functions import *
 
 
@@ -40,7 +39,7 @@ class CreateToolTip(object):
 
 
 # Graphic animation function
-root = Tk(className=' CdA DataBase Comparator')
+root = Tk(className=' Marine Import File updater by MaG v1.0')
 root.geometry('790x185')
 root.resizable(False, False)
 # Variables
@@ -379,17 +378,18 @@ file_label1.place(x=10, y=20)
 sheet_choose_select1 = tkinter.StringVar()
 sheet_choose1 = ttk.Combobox(root, textvariable=sheet_choose_select1, width=10, height=1)
 sheet_choose1.place(x=470, y=17)
+
 button_select1 = Button(root, text='Select', command=choose_file1, height=1, width=5)
 button_select1.place(x=590, y=16)
 
-button_select2 = Button(root, text='Select', command=choose_file2, height=1, width=5)
-button_select2.place(x=590, y=46)
 file_label2 = Label(root, textvariable=file_path_txt2, width=50, anchor='w', relief='groove')
-
 file_label2.place(x=10, y=49)
 sheet_choose_select2 = tkinter.StringVar()
 sheet_choose2 = ttk.Combobox(root, textvariable=sheet_choose_select2, width=10, height=1)
 sheet_choose2.place(x=470, y=47)
+
+button_select2 = Button(root, text='Select', command=choose_file2, height=1, width=5)
+button_select2.place(x=590, y=46)
 
 button_analyze = Button(root, text='Analyze', command=analyze_file, height=3, width=8, state=tkinter.DISABLED)
 button_analyze.place(x=675, y=17)

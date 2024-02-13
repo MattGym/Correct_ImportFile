@@ -134,7 +134,6 @@ def update_alm_and_msg(sheet1, sheet2, am100_av, file1_col_tag, file1_col_seq,  
     ----------
     """
     for i in range(2, max_row1 + 1):
-
         if get_cell_value(sheet1, i, file1_col_seq) == 0:
             prefix = str(get_cell_value(sheet1, i+1, file1_col_tag))[0:3]
             found = False
