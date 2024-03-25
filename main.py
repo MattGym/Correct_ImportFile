@@ -1,9 +1,8 @@
 # Program do porównywania db dumpa oraz bazy danych dostarczonej przez stocznię.
 
-import openpyxl
 # from openpyxl.comments import Comment
 # from openpyxl.styles import PatternFill
-# import pandas as pd
+
 
 import tkinter
 from tkinter import *
@@ -11,7 +10,7 @@ from tkinter import filedialog
 from tkinter import ttk
 from tkinter import messagebox
 from Functions import *
-
+from Functions_global import *
 
 class CreateToolTip(object):
     def __init__(self, widget, text='widget info'):
@@ -39,7 +38,7 @@ class CreateToolTip(object):
 
 
 # Graphic animation function
-root = Tk(className=' Marine Import File updater by MaG v1.0')
+root = Tk(className=' Marine Import File updater by MaG v1_1')
 root.geometry('790x185')
 root.resizable(False, False)
 # Variables
@@ -120,6 +119,7 @@ def analyze_file():
     print(file_path2)
 
     if checkbox2_var.get() == 1:
+        print('running chbox2')
         am100_clean_devicetags(active_sheet1, file1_col_template, file1_col_devicetag2, file1_col_devicetag3,
                                file1_col_devicetag4, file1_col_devicetag5, file1_col_devicetag6, file1_col_devicetag7,
                                file1_col_devicetag8, file1_col_devicetag9, file1_col_devicetag10, max_rows1)
@@ -137,7 +137,7 @@ def analyze_file():
         update_alm_and_msg(active_sheet1, active_sheet2, am100_active, file1_col_tag, file1_col_seq, file1_col_template,
                            file1_col_event, file1_col_algroup, file1_col_msggroup, file1_col_prio, file1_col_HHprio,
                            file1_col_Hprio, file1_col_Lprio, file1_col_LLprio, file1_col_Ext1prio, file1_col_Ext2prio,
-                           file1_col_Ext3prio,file1_col_Ext3prio,file1_col_FAprio, max_rows1, max_rows2)
+                           file1_col_Ext3prio, file1_col_Ext3prio, file1_col_FAprio, max_rows1, max_rows2)
     if checkbox3_var.get() == 1:
         merge_alarms(active_sheet1, file1_col_template, file1_col_seq, file1_col_HHca, file1_col_Hca, file1_col_Lca,
                      file1_col_LLca, file1_col_limit1, file1_col_limit2, file1_col_limit3, file1_col_limit4, max_rows1)
@@ -147,7 +147,6 @@ def analyze_file():
 
     wb1.save(file_path1)
     wb2.save(file_path2)
-
     messagebox.showinfo(title='Message', message='Finished')
 
 
