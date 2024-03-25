@@ -2,8 +2,6 @@
 
 # from openpyxl.comments import Comment
 # from openpyxl.styles import PatternFill
-
-
 import tkinter
 from tkinter import *
 from tkinter import filedialog
@@ -11,6 +9,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from Functions import *
 from Functions_global import *
+
 
 class CreateToolTip(object):
     def __init__(self, widget, text='widget info'):
